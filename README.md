@@ -49,9 +49,9 @@ Pkg.instantiate()
 ```
 
 This will install all dependencies, including:
-- [IJulia.jl](https://github.com/JuliaLang/IJulia.jl): the Julia backend for Jupyter Notebook;
+- [IJulia.jl](https://github.com/JuliaLang/IJulia.jl): Julia backend for Jupyter Notebook;
 - [MLJ.jl](https://github.com/alan-turing-institute/MLJ.jl): general-purpose machine learning framework;
-- [Sole.jl](https://github.com/aclai-lab/Sole.jl): framework for symbolic learning, supporting modal logic;
+- [SoleLogics.jl](https://github.com/aclai-lab/SoleLogics.jl): library containing the base definitions for playing with (modal) logic;
 - [ModalDecisionTrees.jl](https://github.com/aclai-lab/ModalDecisionTrees.jl): machine learning algorithm for extracting modal decision trees.
 
 To open the notebooks, start Jupyter Notebook with the Julia backend by typing:
