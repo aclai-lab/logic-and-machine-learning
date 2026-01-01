@@ -6,18 +6,20 @@ Have fun! 😄
 # Setup
 
 ### Julia Programming Language 
-First of all, this course will be held using the *Julia* programming language: hurray!
+The recommended way to install Julia, is via the `juliaup` tool. You can find how to install it from [its official page](https://julialang.org/downloads/).
 
-For a taste of the advantages and disadvantages of this language, we suggest reading [this summary](https://juliateachingctu.github.io/Julia-for-Optimization-and-Learning/stable/why/) taken from a famous Julia course, taught at the Czech Technical University in Prague. Summing it up in a few words, Julia is *fast* and keeps growing in popularity year after year.
+Juliaup automatically installs the latest version of Julia (1.12 at the moment of writing), but we suggest installing the 1.11 version too, for running the material.
 
-To install the latest stable version of Julia, we refer you to [the official documentation](https://julialang.org/downloads/).
+To do so, run `juliaup add +1.11`.
 
 ### VS Code
 Next, we need a good text editor to support the Julia workflow.
 
 The solution we suggest is to download *Visual Studio Code*, as it is easy to setup and provides a robust extension for handling everything we need.
 
-You can install VS Code [from its official website](https://code.visualstudio.com/), then open it. Select "View" and then click "Extensions". Enter the keyword "Julia" and download the extension with the same name, maintained by the "julialang" organization. Finally, restart VS Code.
+You can install VS Code [from its official website](https://code.visualstudio.com/), then open it. 
+
+To integrate VS Code with Julia, do the following. Select "View" from the topbar and then click "Extensions". Enter the keyword "Julia" and download the extension with the same name, maintained by the "julialang" organization. Finally, restart VS Code.
 
 ### This Repository
 Last but not least, we need to download this repository.
@@ -49,12 +51,6 @@ Pkg.instantiate()
 ```
 
 This will install all dependencies, including:
-- [IJulia.jl](https://github.com/JuliaLang/IJulia.jl): Julia backend for Jupyter Notebook;
-- [MLJ.jl](https://github.com/alan-turing-institute/MLJ.jl): general-purpose machine learning framework;
+- [DecisionTree.jl](https://github.com/JuliaAI/DecisionTree.jl): the standard implementation of decision trees and random forests in Julia;
 - [SoleLogics.jl](https://github.com/aclai-lab/SoleLogics.jl): library containing the base definitions for playing with (modal) logic;
 - [ModalDecisionTrees.jl](https://github.com/aclai-lab/ModalDecisionTrees.jl): machine learning algorithm for extracting modal decision trees.
-
-To open the notebooks, start Jupyter Notebook with the Julia backend by typing:
-```
-using IJulia; IJulia.notebook(; dir=".")
-```
