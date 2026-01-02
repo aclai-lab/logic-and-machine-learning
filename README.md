@@ -1,16 +1,32 @@
 # Logic and Machine Learning: Laboratory Material
 
-This repository contains the Jupyter notebooks for the *Logic and Machine Learning* course laboratory sessions.
+This repository contains the Jupyter notebooks for the [Logic and Machine Learning](https://sites.google.com/view/logic-and-machine-learning) course laboratory sessions.
+
+During these sessions, you will learn how to use the [Julia programming language](https://julialang.org/) together with the [Sole.jl](https://github.com/aclai-lab/Sole.jl) framework for training and analysing symbolic machine learning models, leveraging various logics.
+
 Have fun! 😄
 
-# Setup
+## Setup
 
 ### Julia Programming Language 
-The recommended way to install Julia, is via the `juliaup` tool. You can find how to install it from [its official page](https://julialang.org/downloads/).
 
-Juliaup automatically installs the latest version of Julia (1.12 at the moment of writing), but we suggest installing the 1.11 version too, for running the material.
+If you are using Windows, you can install Julia by running the following in the command prompt:
+```
+winget install --name Julia --id 9NJNWW8PVKMN -e -s msstore
+```
+If you are using macOS or Linux, you can install Julia by running the following in your terminal:
+```
+curl -fsSL https://install.julialang.org | sh
+```
+This will install the latest stable version of Julia, as well as the `juliaup` tool. Start Julia from the command-line by typing `julia`.
 
-To do so, run `juliaup add +1.11`.
+For more information, please visit [Julia's official page](https://julialang.org/downloads/).
+
+Please note that the provided material was written using Julia 1.11. Hence, we suggest installing the 1.11 version explicitly as well:
+
+```
+juliaup add 1.11
+```
 
 ### VS Code
 Next, we need a good text editor to support the Julia workflow.
