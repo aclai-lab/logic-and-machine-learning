@@ -47,7 +47,7 @@ First, we need to import the built-in package manager:
 ```julia
 using Pkg
 ```
-Then, we need to `activate` the project, i.e., we need to specify to Julia that we are working *inside this folder*:
+Then, we need to `activate` the project, i.e., we need to specify to Julia that we are working inside this folder:
 ```julia
 Pkg.activate(".")
 ```
@@ -58,5 +58,5 @@ Pkg.instantiate()
 
 This will install all dependencies, including:
 - [DecisionTree.jl](https://github.com/JuliaAI/DecisionTree.jl): the standard implementation of decision trees and random forests in Julia;
-- [SoleLogics.jl](https://github.com/aclai-lab/SoleLogics.jl): library containing the base definitions for playing with (modal) logic;
-- [ModalDecisionTrees.jl](https://github.com/aclai-lab/ModalDecisionTrees.jl): machine learning algorithm for extracting modal decision trees.
+- [SoleLogics.jl](https://github.com/aclai-lab/SoleLogics.jl): a package containing the base definitions for playing with (modal) logic;
+- [ModalDecisionTrees.jl](https://github.com/aclai-lab/ModalDecisionTrees.jl): a machine learning algorithm for extracting modal decision trees.
