@@ -18,5 +18,8 @@ SoleModels = "4249d9c7-3290-4ddd-961c-e1d3ec2467f8"
 SolePostHoc = "cf1aa0c3-12c9-4ebe-9bdc-bd6c2ca79b72"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
+[sources]
+ManyExpertDecisionTrees = {url = "https://github.com/aclai-lab/ManyExpertDecisionTrees.jl"}
+
 [compat]
 julia = "1.11"
