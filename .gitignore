@@ -29,3 +29,6 @@ JuliaLocalPreferences.toml
 
 # Heavy datasets
 datasets/paviaU/*
+
+# Visual Studio Code folder
+.vscode
