@@ -60,3 +60,33 @@ This will install all dependencies, including:
 - [DecisionTree.jl](https://github.com/JuliaAI/DecisionTree.jl): the standard implementation of decision trees and random forests in Julia;
 - [SoleLogics.jl](https://github.com/aclai-lab/SoleLogics.jl): a package containing the base definitions for playing with (modal) logic;
 - [ModalDecisionTrees.jl](https://github.com/aclai-lab/ModalDecisionTrees.jl): a machine learning algorithm for extracting modal decision trees.
+
+### Troubleshooting
+
+- *`Julia channel v1.11` not found when selecting a kernel in Visual Studio
+Code.*
+
+    Installing the `IJulia` package in the target channel seem to solve the
+    problem:
+    - start a new Julia session in a terminal (you can click `Ctrl+J` in Visual
+    Studio Code) specifying the channel version we are interested in, in our
+    case v1.11
+    ```
+    julia +1.11
+    ```
+    - press `]` to enter package management mode (notice the `Pkg>` instead of
+    `julia` at the beginning of the line)
+    - type the following command:
+    ```julia
+    add IJulia
+    ```
+    - this should also build the `IJulia` package by default, creating a conda
+    environment suitable for running a jupyter session with this specific
+    version of Julia; if we want to be sure, we can also run the command
+    explicitly:
+    ```julia
+    build IJulia
+    ```
+    **Note**: This should not be needed on most machines; you may first want to
+    try reinstalling `julia-lang` and `jupyter` extensions in Visual Studio Code
+    and/or rebooting your machine.
