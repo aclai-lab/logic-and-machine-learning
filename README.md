@@ -58,16 +58,16 @@ Once installed, open the `Extensions` view (`Ctrl+Shift+X`), then enter the
 keyword `julia` and install the extension maintained by the `julialang`
 organization.
 
-### Jupyter-Lab (Alternative)
+### JupyterLab (Alternative)
 
 In case Visual Studio Code doesn't work for you, a good alternative is
-[Jupyter-Lab](https://jupyter.org/).
+JupyterLab.
 
-To install it, you can follow the instruction provided in the
-[intallation page](https://jupyter.org/install).
+To install it, you can follow the instruction provided in 
+[its official website](https://jupyter.org/install).
 
-Once installed, you can open a Jupyter-Lab session (e.g., tipying `jupyterlab`
-in a linux terminal) to start a Jupyter-Lab server. This will also open a
+Once installed, you can open a Jupyter-Lab session (e.g., tipying `jupyter-lab`
+in a linux terminal) to start a Jupyter-Lab local server. This will also open a
 Web App in your browser, where you can run the notebooks. 
 
 ### Dependencies
