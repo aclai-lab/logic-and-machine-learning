@@ -16,6 +16,8 @@ The material is provided in the form of `Jupyter notebooks` (files with `.ipynb`
 extension), which is the standard for writing, sharing, and reproducing
 scientific computing scripts.
 
+*Fun fact:* Jupyter stands for *Julia, Python and R*. 
+
 [UPDATE] Exported htmls and pdfs including the output cells are also provided
 into the relative folders.
 
@@ -55,6 +57,18 @@ from [its official website](https://code.visualstudio.com/).
 Once installed, open the `Extensions` view (`Ctrl+Shift+X`), then enter the
 keyword `julia` and install the extension maintained by the `julialang`
 organization.
+
+### Jupyter-Lab (Alternative)
+
+In case Visual Studio Code doesn't work for you, a good alternative is
+[Jupyter-Lab](https://jupyter.org/).
+
+To install it, you can follow the instruction provided in the
+[intallation page](https://jupyter.org/install).
+
+Once installed, you can open a Jupyter-Lab session (e.g., tipying `jupyterlab`
+in a linux terminal) to start a Jupyter-Lab server. This will also open a
+Web App in your browser, where you can run the notebooks. 
 
 ### Dependencies
 
