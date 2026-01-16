@@ -32,3 +32,6 @@ datasets/paviaU/*
 
 # Visual Studio Code folder
 .vscode
+
+# Jupyter folder
+notebooks/.ipynb_checkpoints
