@@ -7534,6 +7534,9 @@ a.anchor-link {
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre><span class="ansi-green-intense-fg ansi-bold">  Activating</span> project at `~/logic-and-machine-learning/environments/modal-association-rules`
+<span class="ansi-yellow-intense-fg ansi-bold">┌ </span><span class="ansi-yellow-intense-fg ansi-bold">Warning: </span>The project dependencies or compat requirements have changed since the manifest was last resolved.
+<span class="ansi-yellow-intense-fg ansi-bold">│ </span>It is recommended to `Pkg.resolve()` or consider `Pkg.update()` if necessary.
+<span class="ansi-yellow-intense-fg ansi-bold">└ </span><span class="ansi-black-intense-fg">@ Pkg.API ~/.julia/juliaup/julia-1.11.8+0.x64.linux.gnu/share/julia/stdlib/v1.11/Pkg/src/API.jl:1206</span>
 </pre>
 </div>
 </div>
@@ -7569,7 +7572,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b10d9d0f">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d96295ee">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7577,56 +7580,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="c"># this will be useful later, for loading the Natops dataset</span>
-<span class="k">function</span><span class="w"> </span><span class="n">parse_natops</span><span class="p">(</span><span class="n">arffstring</span><span class="o">::</span><span class="kt">String</span><span class="p">)</span>
-<span class="w">    </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataFrame</span><span class="p">()</span>
-<span class="w">    </span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">String</span><span class="p">[]</span>
-
-<span class="w">    </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">split</span><span class="p">(</span><span class="n">arffstring</span><span class="p">,</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
-<span class="w">        </span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-<span class="w">        </span>
-<span class="w">        </span><span class="c"># split the current line;</span>
-<span class="w">        </span><span class="c"># if it is not a data line, starting with DATA_MARK, continue;</span>
-<span class="w">        </span><span class="c"># continue even in the case where checking the first character throwed</span>
-<span class="w">        </span><span class="c"># out an error.</span>
-<span class="w">        </span><span class="n">sline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nothing</span>
-<span class="w">        </span><span class="k">try</span>
-<span class="w">            </span><span class="n">sline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">split</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="s">" "</span><span class="p">)</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">sline</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">'\''</span>
-<span class="w">                </span><span class="k">continue</span>
-<span class="w">            </span><span class="k">end</span>
-<span class="w">        </span><span class="k">catch</span>
-<span class="w">            </span><span class="k">continue</span>
-<span class="w">        </span><span class="k">end</span>
-
-<span class="w">        </span><span class="c"># skip the initial hypen an read the data</span>
-<span class="w">        </span><span class="n">sline</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sline</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span>
-<span class="w">        </span><span class="n">data_and_class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">split</span><span class="p">(</span><span class="n">sline</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="s">"</span><span class="se">\'</span><span class="s">"</span><span class="p">)</span>
-<span class="w">        </span><span class="n">string_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">split</span><span class="p">(</span><span class="n">data_and_class</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="s">"</span><span class="se">\\</span><span class="s">n"</span><span class="p">)</span>
-<span class="w">        </span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data_and_class</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span>
-
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">isempty</span><span class="p">(</span><span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
-<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">string_data</span><span class="p">)</span>
-<span class="w">                </span><span class="n">insertcols!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="kt">Symbol</span><span class="p">(</span><span class="s">"V</span><span class="si">$</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="s">"</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="kt">Array</span><span class="p">{</span><span class="kt">Float64</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">}[])</span>
-<span class="w">            </span><span class="k">end</span>
-<span class="w">        </span><span class="k">end</span>
-
-<span class="w">        </span><span class="n">float_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">{</span><span class="kt">Int</span><span class="p">,</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}}()</span>
-
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">string_data</span><span class="p">)</span>
-<span class="w">            </span><span class="n">float_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">parse</span><span class="p">(</span><span class="kt">Float64</span><span class="p">,</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">split</span><span class="p">(</span><span class="n">string_data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="s">","</span><span class="p">))</span>
-<span class="w">        </span><span class="k">end</span>
-
-<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">float_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">string_data</span><span class="p">)])</span>
-<span class="w">        </span><span class="n">push!</span><span class="p">(</span><span class="n">classes</span><span class="p">,</span><span class="w"> </span><span class="n">class</span><span class="p">)</span>
-<span class="w">            </span>
-<span class="w">    </span><span class="k">end</span><span class="w">    </span>
-<span class="w">    </span>
-<span class="w">    </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sortperm</span><span class="p">(</span><span class="n">eachrow</span><span class="p">(</span><span class="n">df</span><span class="p">),</span><span class="w"> </span><span class="n">by</span><span class="o">=</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">classes</span><span class="p">[</span><span class="n">rownumber</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">df</span><span class="p">[</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="o">:</span><span class="p">],</span><span class="w"> </span><span class="n">classes</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
-<span class="k">end</span>
+<div class="highlight hl-julia"><pre><span></span><span class="n">include</span><span class="p">(</span><span class="n">joinpath</span><span class="p">(</span><span class="s">".."</span><span class="p">,</span><span class="w"> </span><span class="s">"scripts"</span><span class="p">,</span><span class="w"> </span><span class="s">"parse-natops.jl"</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -7639,7 +7593,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>parse_natops (generic function with 1 method)</pre>
+<pre>parse_natops</pre>
 </div>
 </div>
 </div>
@@ -7802,7 +7756,7 @@ ZnVuY3Rpb24gbXlzdXBwb3J0KHBoaTo6RiwgWGs6OkwsIHdvcmxkOjpXKSB3aGVyZSB7CiAgICBGPDpT
 <div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-julia"><pre><span></span><span class="c"># Write your definition here</span>
+<div class="highlight hl-julia"><pre><span></span><span class="c"># Insert your solution here</span>
 </pre></div>
 </div>
 </div>
@@ -7820,8 +7774,8 @@ ZnVuY3Rpb24gbXlzdXBwb3J0KHBoaTo6RiwgWGs6OkwsIHdvcmxkOjpXKSB3aGVyZSB7CiAgICBGPDpT
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">pq</span><span class="p">,</span><span class="w"> </span><span class="n">pr</span><span class="p">,</span><span class="w"> </span><span class="n">qr</span><span class="p">,</span><span class="w"> </span><span class="n">pqr</span><span class="p">]</span>
 <span class="w">        </span><span class="n">println</span><span class="p">(</span>
 <span class="w">            </span><span class="n">mysupport</span><span class="p">(</span>
-<span class="w">                </span><span class="n">formula</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span>
-<span class="w">                </span><span class="n">SoleData</span><span class="o">.</span><span class="n">slicedataset</span><span class="p">(</span><span class="n">Xk</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">30</span><span class="p">),</span>
+<span class="w">                </span><span class="n">formula</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span><span class="w"> </span>
+<span class="w">                </span><span class="n">SoleData</span><span class="o">.</span><span class="n">slicedataset</span><span class="p">(</span><span class="n">Xk</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">30</span><span class="p">),</span><span class="w"> </span>
 <span class="w">                </span><span class="n">Interval</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">X_ndatapoints</span><span class="p">)</span>
 <span class="w">            </span><span class="p">)</span>
 <span class="w">        </span><span class="p">)</span>
@@ -8052,7 +8006,7 @@ $\mathsf{P} \subseteq \mathcal{P}$ is a frequent pattern we found.</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h5 id="Quiz">Quiz<a class="anchor-link" href="#Quiz">¶</a></h5><p>Try to explain the ratio below, which is commonly called <em>confidence</em>.</p>
-<p>$$\text{confidence}(\mathcal{I}, \mathsf{P} \Rightarrow \mathsf{Q}) = \frac{\text{support}(\mathcal{I}, \mathsf{P} \cap \mathsf{Q})}{\text{support}(\mathcal{I}, \mathsf{P})}$$</p>
+<p>$$\text{confidence}(\mathcal{I}, \mathsf{P} \Rightarrow \mathsf{Q}) = \frac{\text{support}(\mathcal{I}, \mathsf{P} \cup \mathsf{Q})}{\text{support}(\mathcal{I}, \mathsf{P})}$$</p>
 </div>
 </div>
 </div>
@@ -8095,8 +8049,8 @@ ZnVuY3Rpb24gbXljb25maWRlbmNlKHJ1bGU6OkFSdWxlLCBYazo6TCwgd29ybGQ6OlcpIHdoZXJlIHsK
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">phi</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">[</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">pq</span><span class="p">,</span><span class="w"> </span><span class="n">pr</span><span class="p">,</span><span class="w"> </span><span class="n">qr</span><span class="p">,</span><span class="w"> </span><span class="n">pqr</span><span class="p">]</span>
 <span class="w">        </span><span class="n">println</span><span class="p">(</span>
 <span class="w">            </span><span class="n">myconfidence</span><span class="p">(</span>
-<span class="w">                </span><span class="n">rule</span><span class="p">,</span>
-<span class="w">                </span><span class="n">SoleData</span><span class="o">.</span><span class="n">slicedataset</span><span class="p">(</span><span class="n">Xk</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">30</span><span class="p">),</span>
+<span class="w">                </span><span class="n">rule</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                </span><span class="n">SoleData</span><span class="o">.</span><span class="n">slicedataset</span><span class="p">(</span><span class="n">Xk</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">30</span><span class="p">),</span><span class="w"> </span>
 <span class="w">                </span><span class="n">Interval</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">X_ndatapoints</span><span class="p">)</span>
 <span class="w">            </span><span class="p">)</span>
 <span class="w">        </span><span class="p">)</span>
@@ -8105,7 +8059,7 @@ ZnVuY3Rpb24gbXljb25maWRlbmNlKHJ1bGU6OkFSdWxlLCBYazo6TCwgd29ybGQ6OlcpIHdoZXJlIHsK
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">isa</span><span class="w"> </span><span class="kt">UndefVarError</span>
 <span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="s">"You need to implement myconfidence."</span><span class="p">)</span>
 <span class="w">    </span><span class="k">end</span>
-<span class="k">end</span><span class="w"> </span>
+<span class="k">end</span>
 </pre></div>
 </div>
 </div>
@@ -8748,33 +8702,33 @@ Specialization fields: Symbol[]</pre>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[34]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>74-element Vector{ARule}:
+<pre>73-element Vector{ARule}:
  right[V4] ≤ 1.0 =&gt; ⟨O⟩inv_left[V4] ≤ 1.0
+ pause_right[V4] ≤ 1.0 =&gt; ⟨O⟩right[V4] ≤ 1.0
+ pause_right[V4] ≤ 1.0 =&gt; ⟨O⟩right[V10] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩left[V4] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩inv_left[V4] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩down[V5] ≤ 1.0
  down[V5] ≤ 1.0 =&gt; ⟨O⟩down_pause[V5] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩behind[V6] ≤ 1.0
  down[V5] ≤ 1.0 =&gt; ⟨O⟩littleleft[V10] ≤ 1.0
- up[V5] ≤ 1.0 =&gt; ⟨O⟩up[V5] ≤ 1.0
- up[V5] ≤ 1.0 =&gt; ⟨O⟩littleleft[V10] ≤ 1.0
- up[V5] ≤ 1.0 =&gt; ⟨O⟩up[V11] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩down[V11] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩behind[V12] ≤ 1.0
  pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩inv_left[V4] ≤ 1.0
- pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩up[V5] ≤ 1.0
- pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩front[V6] ≤ 1.0
- pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩right_pause[V10] ≤ 1.0
  pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩up[V11] ≤ 1.0
- pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩pause_up[V11] ≤ 1.0
- longdown_pause[V5] ≤ 1.0 =&gt; ⟨D⟩inv_left[V4] ≤ 1.0
  ⋮
+ longup[V11] ≤ 1.0 =&gt; ⟨O⟩front_pause[V6] ≤ 1.0
+ longup[V11] ≤ 1.0 =&gt; ⟨O⟩front_inv[V6] ≤ 1.0
+ longup[V11] ≤ 1.0 =&gt; ⟨O⟩right_pause[V10] ≤ 1.0
+ longup[V11] ≤ 1.0 =&gt; ⟨O⟩up[V11] ≤ 1.0
  longup[V11] ≤ 1.0 =&gt; ⟨O⟩pause_down[V11] ≤ 1.0
  longup[V11] ≤ 1.0 =&gt; ⟨O⟩longup[V11] ≤ 1.0
  longup[V11] ≤ 1.0 =&gt; ⟨O⟩inv_longdown[V11] ≤ 1.0
- behind[V12] ≤ 1.0 =&gt; ⟨O⟩littleleft[V10] ≤ 1.0
+ behind[V12] ≤ 1.0 =&gt; ⟨O⟩left[V4] ≤ 1.0
+ front[V12] ≤ 1.0 =&gt; ⟨O⟩front[V12] ≤ 1.0
  front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩down[V5] ≤ 1.0
- front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩down_pause[V5] ≤ 1.0
- front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩behind[V6] ≤ 1.0
- front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩front_pause[V6] ≤ 1.0
  front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩inv_left[V10] ≤ 1.0
- front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩down[V11] ≤ 1.0
- front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩pause_down[V11] ≤ 1.0
- longfront[V12] ≤ 1.0 =&gt; ⟨D⟩front[V12] ≤ 1.0</pre>
+ front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩pause_down[V11] ≤ 1.0</pre>
 </div>
 </div>
 </div>
@@ -8826,7 +8780,7 @@ Specialization fields: Symbol[]</pre>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[36]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>74</pre>
+<pre>73</pre>
 </div>
 </div>
 </div>
@@ -8852,34 +8806,62 @@ Specialization fields: Symbol[]</pre>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[37]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>74-element Vector{ARule}:
+<pre>73-element Vector{ARule}:
  right[V4] ≤ 1.0 =&gt; ⟨O⟩inv_left[V4] ≤ 1.0
+ pause_right[V4] ≤ 1.0 =&gt; ⟨O⟩right[V4] ≤ 1.0
+ pause_right[V4] ≤ 1.0 =&gt; ⟨O⟩right[V10] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩left[V4] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩inv_left[V4] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩down[V5] ≤ 1.0
  down[V5] ≤ 1.0 =&gt; ⟨O⟩down_pause[V5] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩behind[V6] ≤ 1.0
  down[V5] ≤ 1.0 =&gt; ⟨O⟩littleleft[V10] ≤ 1.0
- up[V5] ≤ 1.0 =&gt; ⟨O⟩up[V5] ≤ 1.0
- up[V5] ≤ 1.0 =&gt; ⟨O⟩littleleft[V10] ≤ 1.0
- up[V5] ≤ 1.0 =&gt; ⟨O⟩up[V11] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩down[V11] ≤ 1.0
+ down[V5] ≤ 1.0 =&gt; ⟨O⟩behind[V12] ≤ 1.0
  pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩inv_left[V4] ≤ 1.0
- pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩up[V5] ≤ 1.0
- pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩front[V6] ≤ 1.0
- pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩right_pause[V10] ≤ 1.0
  pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩up[V11] ≤ 1.0
- pause_up[V5] ≤ 1.0 =&gt; ⟨O⟩pause_up[V11] ≤ 1.0
- longdown_pause[V5] ≤ 1.0 =&gt; ⟨D⟩inv_left[V4] ≤ 1.0
  ⋮
+ longup[V11] ≤ 1.0 =&gt; ⟨O⟩front_pause[V6] ≤ 1.0
+ longup[V11] ≤ 1.0 =&gt; ⟨O⟩front_inv[V6] ≤ 1.0
+ longup[V11] ≤ 1.0 =&gt; ⟨O⟩right_pause[V10] ≤ 1.0
+ longup[V11] ≤ 1.0 =&gt; ⟨O⟩up[V11] ≤ 1.0
  longup[V11] ≤ 1.0 =&gt; ⟨O⟩pause_down[V11] ≤ 1.0
  longup[V11] ≤ 1.0 =&gt; ⟨O⟩longup[V11] ≤ 1.0
  longup[V11] ≤ 1.0 =&gt; ⟨O⟩inv_longdown[V11] ≤ 1.0
- behind[V12] ≤ 1.0 =&gt; ⟨O⟩littleleft[V10] ≤ 1.0
+ behind[V12] ≤ 1.0 =&gt; ⟨O⟩left[V4] ≤ 1.0
+ front[V12] ≤ 1.0 =&gt; ⟨O⟩front[V12] ≤ 1.0
  front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩down[V5] ≤ 1.0
- front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩down_pause[V5] ≤ 1.0
- front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩behind[V6] ≤ 1.0
- front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩front_pause[V6] ≤ 1.0
  front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩inv_left[V10] ≤ 1.0
- front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩down[V11] ≤ 1.0
- front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩pause_down[V11] ≤ 1.0
- longfront[V12] ≤ 1.0 =&gt; ⟨D⟩front[V12] ≤ 1.0</pre>
+ front_pause[V12] ≤ 1.0 =&gt; ⟨O⟩pause_down[V11] ≤ 1.0</pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fcdcb6c4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Here is a list of interesting characteristics gestures hidden in the <em>I have command</em> movements.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a5f01061">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><em>Whenever the right hand of the operator is completely stretching in front of him/her and their elbow goes all the way up on the y-axis, the same elbow started the movement range in a rest position and, near the end of the movement range, the operator’s right hand is moving to the left, but will soon change direction.</em></p>
+<hr/>
+<p><em>When the right elbow frontally moves away from the operator for about one second and, just after this movement range, the right hand frontally retracts from a stretched position to the same z coordinate of the operator’s ankle, then the right elbow reproduces the same movement but inverting its direction.</em></p>
+<hr/>
+<p>We discovered that the entire vertical range movement of the right elbow, first up and then down, in nearly one second, begins with the right hand not moving on the horizontal axis for about 0.2 seconds, and then slightly moving to the right.</p>
+<p>The last 0.5 seconds of the movement range involves the right elbow descent phase.</p>
+<p>The insight underlying this rule is that, across a 0.48% of candidates in which the local support of the antecedent holds, about half of them perform this movement particularly fast.</p>
 </div>
 </div>
 </div>
